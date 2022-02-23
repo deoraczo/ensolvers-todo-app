@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { SharedModule } from './modules/shared/shared.module';
+import { TaskingModule } from './modules/tasking/tasking.module';
+import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from '@nestjs/config';
+import Config from './config';
+import { enviroments } from './enviroments';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [Config]
+    }),
+    SharedModule, 
+    TaskingModule, 
+    DatabaseModule
+  ]
 })
 export class AppModule {}
