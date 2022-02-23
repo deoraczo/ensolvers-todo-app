@@ -1,6 +1,6 @@
 <template>
   <div class="task">
-    <task-item />
+    <task-item v-for="task in tasks" :key="task.id" :task="task"/>
   </div>
 </template>
 
@@ -8,6 +8,11 @@
 <script>
 import TaskItem from './Item.vue'
 export default {
+  props: {
+    tasks: {
+      type: Array
+    }
+  },
   components: {
     TaskItem
   }
@@ -19,11 +24,5 @@ export default {
   padding: 30px;
   background-color: #20212c;
   border-radius: 8px;
-}
-
-.actions {
-  :not(:last-child) {
-    margin-right: 8px;
-  }
 }
 </style>

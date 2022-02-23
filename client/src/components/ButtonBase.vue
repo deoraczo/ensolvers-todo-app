@@ -1,11 +1,12 @@
 <template>
-  <button class="button" :style="backgroundColorStyle">
+  <button class="button" :style="backgroundColorStyle" @click="$emit('click')">
     <font-awesome-icon :icon="icon" />
     <span v-if="text">{{ text }}</span>
   </button>
 </template>
 <script>
 export default {
+  name: 'ButtonBase',
   props: {
     text: {
       type: String
@@ -17,6 +18,8 @@ export default {
       type: String
     }
   },
+
+  emits: ['click'],
 
   computed: {
     backgroundColorStyle() {

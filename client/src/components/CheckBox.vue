@@ -41,7 +41,7 @@
 
 
 .check-wrapper input:checked ~ .mark {
-  background-color: #00C853;
+  background-color: #00ab47;
 }
 
 

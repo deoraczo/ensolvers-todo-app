@@ -5,8 +5,9 @@
       <div class="" style="margin-bottom: 20px;">
         <button-base text="Add task" icon="fa-solid fa-add"/>
       </div>
-      <task />
+      <task :tasks="tasks"/>
     </div>
+    <toast message="Successfylly" type="success" />
   </app-layout>
 </template>
 
@@ -14,16 +15,29 @@
 import AppLayout from '@/layouts/AppLayout.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 import Task from '@/components/tasks/Index.vue'
+import Toast from '@/components/toast/Index.vue'
+import { taskService } from '@/services'
+
 export default {
   components: {
     AppLayout,
     ButtonBase,
-    Task
+    Task,
+    Toast
   },
   data() {
     return {
-      title: ''
+      tasks: [],
     }
+  },
+  created() {
+    taskService.getAllTasks()
+      .then(({ data }) => {
+        this.tasks = data
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>
