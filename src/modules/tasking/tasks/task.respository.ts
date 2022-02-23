@@ -7,6 +7,7 @@ export interface TaskRepository {
   find(taskId: string): Promise<Nullable<Task>>
   findAll(): Promise<Task[]>
   remove(id: string): Promise<void>
+  match(where: Object): Promise<Nullable<Task>>
 }
 
 export const TaskRepository = Symbol('TaskRepository')

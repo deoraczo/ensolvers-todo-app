@@ -31,4 +31,8 @@ export class TaskRepositoryMock implements TaskRepository {
   async remove(id: string): Promise<void> {
       
   }
+
+  async match(where: Object): Promise<Task> {
+      return null
+  }
 }

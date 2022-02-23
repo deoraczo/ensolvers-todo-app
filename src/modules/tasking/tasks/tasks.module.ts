@@ -17,6 +17,7 @@ import { TaskUnMarkerService } from './services/update/task-unmarker.service';
 import { Task } from './task.entity';
 import { TaskRepository } from './task.respository';
 import { TypeOrmTaskRespository } from './typeorm-task.repository';
+import { IsTitleAlreadyExistConstraint } from './validators/is-title-already-exist.validator';
 @Module({
   controllers: [
     PutTaskController,
@@ -39,6 +40,7 @@ import { TypeOrmTaskRespository } from './typeorm-task.repository';
     TaskDeleterService,
     TaskMarkerService,
     TaskUnMarkerService,
+    IsTitleAlreadyExistConstraint,
   ],
   imports: [
     TypeOrmModule.forFeature([Task], 'connection'),

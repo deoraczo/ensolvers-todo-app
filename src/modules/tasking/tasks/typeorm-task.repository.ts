@@ -17,7 +17,7 @@ export class TypeOrmTaskRespository extends TypeOrmRepository<Task> implements T
   }
 
   async find(taskId: string): Promise<Task> {
-    return await this.match(taskId)
+    return await this.findById(taskId)
   }
 
   async findAll(): Promise<Task[]> {
@@ -26,5 +26,9 @@ export class TypeOrmTaskRespository extends TypeOrmRepository<Task> implements T
 
   async remove(id: string): Promise<void> {
     await this.delete(id)
+  }
+
+  async match(where: object = {}): Promise<Task> {
+    return await this.findByMatch(where)
   }
 }

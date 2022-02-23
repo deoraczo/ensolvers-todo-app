@@ -1,6 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ValidationError } from 'class-validator';
+import { useContainer, ValidationError } from 'class-validator';
 import { AppModule } from './app.module';
 import { ValidationException } from './modules/shared/exceptions/validation.exception';
 import { ValidationExceptionFilter } from './modules/shared/filters/validation-exception.filter';
@@ -23,6 +23,9 @@ async function bootstrap() {
       return new ValidationException(errMsg)
     }
   }))
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true })
+
   await app.listen(3000);
 }
 bootstrap();

@@ -18,19 +18,25 @@ export abstract class TypeOrmRepository<T> {
     return this.connection.getRepository<T>(this.entity());
   }
 
-  async persist(t: T): Promise<void> {
+  protected async persist(t: T): Promise<void> {
     const save = await this.repository().save(t as any)
   }
 
-  async match(id: string): Promise<Nullable<T>> {
+  protected async findByMatch(where: object = {}): Promise<Nullable<T>> {
+    return await this.repository().findOne({
+      where
+    })
+  }
+
+  protected async findById(id: string): Promise<Nullable<T>> {
     return await this.repository().findOne(id)
   }
 
-  async search(): Promise<T[]> {
+  protected async search(): Promise<T[]> {
     return await this.repository().find()
   }
 
-  async delete(id: string): Promise<void> {
+  protected async delete(id: string): Promise<void> {
     await this.repository().delete(id)
   }
 }
