@@ -9,5 +9,9 @@ export class PathRenameTaskController {
   @Patch(':taskId')
   async invoke(@Param('taskId') taskId: string, @Body() dto: RenameTaskDTO) {
     await this.taskRenamer.rename(taskId, dto)
+
+    return {
+      message: 'Task title renamed successfully'
+    }
   }
 }
