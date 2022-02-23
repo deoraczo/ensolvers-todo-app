@@ -13,8 +13,10 @@ const taskStore = {
   actions: {
     async fetchTasks({commit}) {
       const { data } = await taskService.getAllTasks()
-      console.log(data)
       commit('FILL_TASKS', data)
+    },
+    async taskRemoved({ commit, state }, id) {
+      commit('FILL_TASKS', state.tasks.filter(task => task.id !== id))
     }
   },
   getters: {

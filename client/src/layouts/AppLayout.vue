@@ -4,12 +4,17 @@
     <main class="main">
       <slot></slot>
     </main>
+    <toast />
   </div>
 </template>
 
 <script>
-export default {
+import Toast from '@/components/toast/Index.vue'
 
+export default {
+  components: {
+    Toast
+  }
 }
 </script>
 

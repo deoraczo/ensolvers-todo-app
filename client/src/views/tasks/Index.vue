@@ -7,7 +7,6 @@
       </div>
       <task v-if="tasks" :tasks="tasks"/>
     </div>
-    <toast message="Successfylly" type="success" />
   </app-layout>
 </template>
 
@@ -15,7 +14,6 @@
 import AppLayout from '@/layouts/AppLayout.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 import Task from '@/components/tasks/Index.vue'
-import Toast from '@/components/toast/Index.vue'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -23,7 +21,6 @@ export default {
     AppLayout,
     ButtonBase,
     Task,
-    Toast
   },
   mounted() {
     this.fetchTasks()

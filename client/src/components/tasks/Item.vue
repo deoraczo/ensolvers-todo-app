@@ -15,7 +15,9 @@
 <script>
 import CheckBox from '@/components/CheckBox.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
+import { toastMixin } from '@/mixins/toast.mixin.js'
 import { taskService } from '@/services'
+
 export default {
   props: {
     task: {
@@ -26,12 +28,16 @@ export default {
     CheckBox,
     ButtonBase,
   },
-
+  mixins: [toastMixin],
   methods: {
     deleteTask() {
       taskService.deleteTask(this.task.id)
-        .then(data => {
-          console.log(data)
+        .then(({ data: { message } }) => {
+          this.toast({
+            message,
+            type: 'success'
+          })
+          this.$store.dispatch('task/taskRemoved', this.task.id)
         })
         .catch(err => {
           console.log(err)
