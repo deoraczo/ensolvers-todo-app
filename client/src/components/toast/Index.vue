@@ -1,5 +1,5 @@
 <template>
-  <div class="toast toast--position" :class="toastClass">
+  <div class="toast toast--position" :class="toastClass" v-show="show">
     <div class="toast-icon">
       <component :is="toastIcon"></component>
     </div>
@@ -8,7 +8,7 @@
       <div class="toast--message">{{ message }}</div>
     </div>
     <div class="toast-action">
-      <button>&times;</button>
+      <button @click="hide">&times;</button>
     </div>
   </div>
 </template>
@@ -19,24 +19,59 @@ import SuccessIcon from './SuccessIcon.vue'
 import WarningIcon from './WarningIcon.vue'
 
 export default {
-  props: {
-    title: {
-      type: String
-    },
-    message: {
-      type: String,
-      required: true
-    },
-    type: {
-      type: String,
-      default: 'success'
-    }
-  },
+  // props: {
+  //   title: {
+  //     type: String
+  //   },
+  //   message: {
+  //     type: String,
+  //     required: true
+  //   },
+  //   type: {
+  //     type: String,
+  //     default: 'success'
+  //   }
+  // },
 
   components: {
     ErrorIcon,
     SuccessIcon,
     WarningIcon
+  },
+
+
+  data: () => ({
+    show: false,
+    timeout: null,
+    title: null,
+    message: 'Toast',
+    type: 'success'
+  }),
+
+  created(){
+    this.unsubscribe = this.$store.subscribeAction((action) => {
+      if (action.type === 'toast/fire') {
+        const { message, type, title } = action.payload
+        this.message = message
+        this.type = type
+        this.title = title
+        this.show = true
+      }
+    })
+  },
+
+  watch: {
+    show() {
+      if(this.timeout) {
+        clearTimeout(this.timeout)
+        return
+      }
+
+      this.timeout = setTimeout(() => {
+        console.log('termino')
+        this.show = false
+      }, 3000)
+    }
   },
 
   computed: {
@@ -49,6 +84,12 @@ export default {
     },
     toastTitle() {
       return this.title ?? this.type.charAt(0).toUpperCase() + this.type.slice(1);
+    }
+  },
+
+  methods: {
+    hide() {
+      this.show = false
     }
   }
 }
