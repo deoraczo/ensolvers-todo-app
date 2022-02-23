@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { TaskMarkException } from "./exceptions/task-mark.exception"
+import { TaskId } from "./task-id"
 
 export enum TaskStatus {
   DONE = 'DONE',
@@ -7,7 +10,10 @@ export enum TaskStatus {
 
 @Entity({ name: 'tasks' })
 export class Task {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({ 
+    type: 'uuid',
+    generated: 'uuid',
+  })
   readonly id: string
 
   @Column({ unique: true })
@@ -27,17 +33,38 @@ export class Task {
   })
   readonly createdAt: Date
 
-  constructor(id: string, title: string) {
+  constructor(id: string, title: string, status?: TaskStatus, createdAt?: Date) {
     this.id = id
     this.title = title
-    this.status = TaskStatus.PENDING
-    this.createdAt = new Date()
+    this.status = status ?? TaskStatus.PENDING
+    this.createdAt = createdAt ?? new Date()
   }
 
 
   static create(id: string, title: string): Task
   {
     const task = new Task(id, title)
+    return task
+  }
+
+  renameTitle(title: string): Task {
+    const task = new Task(this.id, title, this.status, this.createdAt)
+    return task
+  }
+
+  mark(): Task {
+    if (this.status == TaskStatus.DONE) {
+      throw new TaskMarkException('cannot mark a marked task')
+    }
+    const task = new Task(this.id, this.title, TaskStatus.DONE, this.createdAt)
+    return task
+  }
+
+  unmark(): Task {
+    if (this.status == TaskStatus.PENDING) {
+      throw new TaskMarkException('cannot unmark a unmarked task')
+    }
+    const task = new Task(this.id, this.title, TaskStatus.PENDING, this.createdAt)
     return task
   }
 }

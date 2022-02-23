@@ -1,9 +1,9 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { InjectConnection } from "@nestjs/typeorm";
+
 import { TypeOrmRepository } from "../../shared/typeorm.repository";
-import { Connection, EntityRepository, EntitySchema, ObjectType } from "typeorm";
+import { EntityRepository, ObjectType } from "typeorm";
 import { Task } from "./task.entity";
 import { TaskRepository } from "./task.respository";
+import { TaskId } from "./task-id";
 
 @EntityRepository(Task)
 export class TypeOrmTaskRespository extends TypeOrmRepository<Task> implements TaskRepository {
@@ -14,5 +14,17 @@ export class TypeOrmTaskRespository extends TypeOrmRepository<Task> implements T
 
   async save(task: Task): Promise<void> {
     await this.persist(task)
+  }
+
+  async find(taskId: string): Promise<Task> {
+    return await this.match(taskId)
+  }
+
+  async findAll(): Promise<Task[]> {
+    return await this.search()
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.delete(id)
   }
 }

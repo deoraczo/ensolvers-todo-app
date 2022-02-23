@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { GuidVO } from '../../../../shared/guid.vo';
 import { TaskRepositoryMock } from '../../task-repository.mock';
 import { Task, TaskStatus } from '../../task.entity';
 import { TaskRepository } from '../../task.respository';
@@ -25,9 +26,9 @@ describe('TaskCreatorService', () => {
   });
 
   it('should create a valid task', () => {
-    const task = Task.create('10', 'create ui')
+    const task = Task.create(GuidVO.random().value, 'First task')
 
-    taskCreator.create({ id: task.id, title: task.title})
+    taskCreator.create(task.id, { title: task.title })
     taskRepository.assertLastSavedTaskIs(task)
   });
 });

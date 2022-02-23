@@ -14,7 +14,7 @@ const ormConfig: ConnectionOptions = {
   synchronize: false,
   migrationsRun: true,
   // logging: true, 
-  logging: false,
+  logging: true,
   migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
   cli: {
     migrationsDir: './src/database/migrations',

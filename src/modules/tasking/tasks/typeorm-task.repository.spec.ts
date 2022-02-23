@@ -1,4 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
+import { GuidVO } from "src/modules/shared/guid.vo";
 import { DatabaseModule } from "../../../database/database.module";
 import { TaskingModule } from "../tasking.module";
 import { Task } from "./task.entity";
@@ -20,7 +21,7 @@ describe('TypeOrmTaskRepository', () => {
   });
 
   it('should save a task in database', async () => {
-    const task = Task.create('10', 'Task created')
+    const task = Task.create(GuidVO.random().value, 'Task created')
     await taskRepository.save(task)
     expect.assertions(0)
   })
