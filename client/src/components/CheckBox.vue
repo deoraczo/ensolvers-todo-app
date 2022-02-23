@@ -1,10 +1,25 @@
 <template>
     <label class="check-wrapper">
-      <input type="checkbox" checked="checked">
+      <input type="checkbox" :checked="checked" @change="onChange">
       <span class="mark"></span>
     </label>
 </template>
 
+<script>
+export default {
+  props: {
+    checked: {
+      type: Boolean
+    }
+  },
+  emits: ['change'],
+  methods: {
+    onChange(value){
+      this.$emit('change', value.target.checked)
+    }
+  }
+}
+</script>
 <style lang="scss" scoped>
 .check-wrapper {
   display: block;

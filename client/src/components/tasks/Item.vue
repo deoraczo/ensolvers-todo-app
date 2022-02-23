@@ -1,6 +1,6 @@
 <template>
   <div class="items">
-    <check-box chec="" />
+    <check-box :checked="checked" @change="change" />
     <div class="info">
       <span class="info-title">{{ task.title }}</span>
       <span class="info-date">5:23 AM, 01/16/17</span>
@@ -28,7 +28,9 @@ export default {
     CheckBox,
     ButtonBase,
   },
+
   mixins: [toastMixin],
+
   methods: {
     deleteTask() {
       taskService.deleteTask(this.task.id)
@@ -42,6 +44,57 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+
+    change(checked) {
+      if (checked) {
+        taskService.markTask(this.task.id)
+          .then(({ data: { message } }) => {
+            this.toast({
+              message,
+              type: 'success'
+            })
+          })
+          .catch(err => {
+            const { statusCode, message } = err.response.data
+            if (statusCode === 409 || statusCode === 404) {
+              this.toast({
+                message,
+                type: 'error'
+              })
+            }
+          })
+      } else {
+        taskService.unmarkTask(this.task.id)
+          .then(({ data: { message } }) => {
+            this.toast({
+              message,
+              type: 'success'
+            })
+          })
+          .catch(err => {
+            const { statusCode, message } = err.response.data
+            if (statusCode === 409 || statusCode === 404) {
+              this.toast({
+                message,
+                type: 'error'
+              })
+            }
+          })
+      }
+    }
+  },
+
+  computed: {
+    checked() {
+      console.log('pass')
+      return this.task.status === 'DONE'
+    }
+  },
+
+  watch: {
+    checked(oldVal, newVal) {
+      console.log(oldVal, newVal)
     }
   }
 }
