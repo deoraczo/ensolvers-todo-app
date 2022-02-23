@@ -5,7 +5,7 @@
       <div class="" style="margin-bottom: 20px;">
         <button-base text="Add task" icon="fa-solid fa-add"/>
       </div>
-      <task :tasks="tasks"/>
+      <task v-if="tasks" :tasks="tasks"/>
     </div>
     <toast message="Successfylly" type="success" />
   </app-layout>
@@ -16,7 +16,7 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 import Task from '@/components/tasks/Index.vue'
 import Toast from '@/components/toast/Index.vue'
-import { taskService } from '@/services'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -25,19 +25,18 @@ export default {
     Task,
     Toast
   },
-  data() {
-    return {
-      tasks: [],
-    }
+  mounted() {
+    this.fetchTasks()
   },
-  created() {
-    taskService.getAllTasks()
-      .then(({ data }) => {
-        this.tasks = data
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  methods: {
+    ...mapActions({
+      fetchTasks: 'task/fetchTasks'
+    })
+  },
+  computed: {
+    ...mapGetters({
+      tasks: 'task/getTasks'
+    })
   }
 }
 </script>
