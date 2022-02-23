@@ -1,4 +1,7 @@
 import { ConnectionOptions } from "typeorm";
+import { config } from 'dotenv'
+
+config()
 
 const ormConfig: ConnectionOptions = {
   type: 'mysql',
@@ -10,10 +13,11 @@ const ormConfig: ConnectionOptions = {
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: false,
   migrationsRun: true,
-  logging: true,
-  migrations: [__dirname + './src/database/migrations/**/*{.ts,.js}'],
+  // logging: true, 
+  logging: false,
+  migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
   cli: {
-      migrationsDir: './src/database/migrations',
+    migrationsDir: './src/database/migrations',
   }
 }
 

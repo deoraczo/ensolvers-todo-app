@@ -1,16 +1,15 @@
 import { Module } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import Config from 'src/config';
-import ormConfig from 'src/ormconfig';
-
+import * as ormConfig from '../ormconfig';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       ...ormConfig,
-      autoLoadEntities: true
-    })
+      autoLoadEntities: true,
+      name: 'connection'
+    }),
   ]
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+}

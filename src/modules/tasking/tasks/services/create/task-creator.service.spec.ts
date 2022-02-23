@@ -25,7 +25,7 @@ describe('TaskCreatorService', () => {
   });
 
   it('should create a valid task', () => {
-    const task = Task.cretea('10', 'create ui')
+    const task = Task.create('10', 'create ui')
 
     taskCreator.create({ id: task.id, title: task.title})
     taskRepository.assertLastSavedTaskIs(task)

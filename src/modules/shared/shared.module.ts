@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { TaskingModule } from '../tasking/tasking.module';
 
-@Module({})
+@Module({
+  
+})
 export class SharedModule {}
