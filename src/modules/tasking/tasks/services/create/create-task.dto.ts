@@ -4,8 +4,5 @@ import { IsTitleAlreadyExist } from "../../validators/is-title-already-exist.val
 export class CreateTaskDTO {
   @IsString()
   @IsNotEmpty()
-  @IsTitleAlreadyExist({
-    message: 'Task whit title $value already exists'
-  })
   title: string
 }
