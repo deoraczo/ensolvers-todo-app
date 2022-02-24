@@ -9,9 +9,9 @@ class FolderService {
     return await apiInvoker.http.get(`/folders/${folderId}/tasks`)
   }
 
-  // async deleteFolder(id) {
-  //   return await apiInvoker.http.delete(`/folders/${id}`)
-  // }
+  async deleteFolder(id) {
+    return await apiInvoker.http.delete(`/folders/${id}`)
+  }
 
   // async markFolder(id) {
   //   return await apiInvoker.http.patch(`/folders/${id}/mark`)

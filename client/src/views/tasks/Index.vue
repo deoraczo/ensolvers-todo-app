@@ -1,7 +1,19 @@
 <template>
   <app-layout>
     <div class="container">
-      <h1 class="title">TODO APP</h1>
+      <div class="task-header">
+        <div>
+          <button class="back-btn" @click="goFolders">
+            <i class="material-icons">chevron_left</i>
+          </button>
+        </div>
+        <div class="task-header-wrapper">
+          <div class="task-header--title">
+            <i class="material-icons">folder</i>
+            <h1 class="uppercase">{{ folderName }}</h1>
+          </div>
+        </div>
+      </div>
       <div class="" style="margin-bottom: 20px;">
         <button-base @click="openModal" text="Add task" icon="add"/>
       </div>
@@ -139,12 +151,17 @@ export default {
             this.requestError = message
           }
         })
+    },
+
+    goFolders() {
+      this.$router.push({ name: 'folders' })
     }
 
   },
   computed: {
     ...mapGetters({
-      tasks: 'task/getTasks'
+      tasks: 'task/getTasks',
+      folderName: 'task/getFolderName'
     })
   },
 
@@ -159,12 +176,50 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  color: var(--text-color);
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: center;
+.task-header {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  &-wrapper {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+  }
+  &--title {
+    color: var(--text-color);
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    h1 {
+      font-size: 1.2rem;
+      margin-left: 8px;
+    }
+  }
 }
+
+
+.back-btn {
+    width: 2.2rem;
+    height: 2.2rem;
+    border: none;
+    padding: 0;
+    color: var(--text-color);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i {
+      font-size: 30px;
+    }
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(75, 85, 99, 1);
+      color: #fff;
+      border-radius: 0.5rem;
+      padding: 0.375rem;
+    }
+  }
 
 </style>

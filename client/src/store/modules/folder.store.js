@@ -15,6 +15,9 @@ const folderStore = {
       const { data } = await folderService.getAllFolders()
       commit('FILL_TASKS', data)
     },
+    async folderRemoved({ commit, state }, id) {
+      commit('FILL_TASKS', state.folders.filter(folder => folder.id !== id))
+    },
   },
   getters: {
     getFolders: state => {

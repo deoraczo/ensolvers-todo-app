@@ -97,37 +97,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.items {
-  border-radius: 8px;
-  padding: 20px;
-  background-color: var(--bg-color);
-  display: flex;
-  align-items: center;
-  .box {
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  .info {
-    flex: 1;
-    margin-left: 10px;
-    display: flex;
-    flex-direction: column;
-    color: var(--text-color);
 
-    &-title {
-      font-weight: bold;
-      margin-bottom: 4px;
-      font-size: 1.2rem;
-    }
-    &-date {
-      font-size: 0.85rem;
-    }
-  }
-
-  &:not(:last-child) {
-    margin-bottom: 14px;
-  }
-}
 
 .actions {
   :not(:last-child) {
