@@ -3,6 +3,7 @@
 cd ./client
 
 npm install --only=dev
-npm install --only=production
+
+npm install
 
 npm run build
