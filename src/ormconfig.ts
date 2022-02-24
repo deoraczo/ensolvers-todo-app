@@ -13,8 +13,7 @@ const ormConfig: ConnectionOptions = {
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: false,
   migrationsRun: true,
-  // logging: true, 
-  logging: true,
+  logging: false,
   migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
   cli: {
     migrationsDir: './src/database/migrations',

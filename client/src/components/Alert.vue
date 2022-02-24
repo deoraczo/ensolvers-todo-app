@@ -4,7 +4,7 @@
   >
     <span class="alert-message">{{ message }}</span>
     <button class="alert-close" @click="$emit('close')">
-      <i class="fas fa-times"></i>
+      <i class="material-icons">close</i>
     </button>
     <!-- <span class="absolute top-0 bottom-0 right-0 px-3 py-3"
     >

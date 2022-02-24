@@ -1,9 +1,16 @@
 <template>
   <div id="app">
     <router-view />
+    <toast />
   </div>
 </template>
 
-<style lang="scss">
+<script>
+import Toast from '@/components/toast/Index.vue'
 
-</style>
+export default {
+  components: {
+    Toast
+  }
+}
+</script>

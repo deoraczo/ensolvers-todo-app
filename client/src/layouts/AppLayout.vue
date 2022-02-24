@@ -1,25 +1,14 @@
 <template>
   <div>
-    <h1>layout</h1>
     <main class="main">
       <slot></slot>
     </main>
-    <toast />
   </div>
 </template>
 
-<script>
-import Toast from '@/components/toast/Index.vue'
-
-export default {
-  components: {
-    Toast
-  }
-}
-</script>
-
 <style lang="scss" scoped>
 .main {
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;

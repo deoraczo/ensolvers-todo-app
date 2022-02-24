@@ -22,9 +22,10 @@ export abstract class TypeOrmRepository<T> {
     const save = await this.repository().save(t as any)
   }
 
-  protected async findByMatch(where: object = {}): Promise<Nullable<T>> {
+  protected async findByMatch(where: object = {}, relations: string[] = []): Promise<Nullable<T>> {
     return await this.repository().findOne({
-      where
+      where,
+      relations
     })
   }
 

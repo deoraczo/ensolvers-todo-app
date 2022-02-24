@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { TaskEmailAlreadyExistsException } from '../../exceptions/task-email-already-exists.exception';
+import { FolderFinderService } from 'src/modules/tasking/folders/services/find/folder-finder.service';
 import { TaskIdAlreadyExistsException } from '../../exceptions/task-id-already-exists.exception';
+import { TaskTitleAlreadyExistsException } from '../../exceptions/task-title-already-exists.exception';
 import { Task } from '../../task.entity';
 import { TaskRepository } from '../../task.respository';
 import { CreateTaskDTO } from './create-task.dto';
@@ -8,12 +9,16 @@ import { CreateTaskDTO } from './create-task.dto';
 @Injectable()
 export class TaskCreatorService {
 
-  constructor(@Inject(TaskRepository) private readonly taskRepository: TaskRepository) {}
+  constructor(
+    @Inject(TaskRepository) private readonly taskRepository: TaskRepository,
+    private folderFinder: FolderFinderService,
+  ) {}
 
   async create(taskId: string, dto: CreateTaskDTO): Promise<void> {
+    const folder = await this.folderFinder.find(dto.folderId)
     await this.ensureIdUuidDoesNotExists(taskId, this.taskRepository)
-    await this.ensureTitleDoesNotExists(dto.title, this.taskRepository)
-    const task = Task.create(taskId, dto.title)
+    await this.ensureTitleDoesNotExists(dto.title, dto.folderId, this.taskRepository)
+    const task = Task.create(taskId, dto.title, folder)
     await this.taskRepository.save(task)
   }
 
@@ -24,10 +29,12 @@ export class TaskCreatorService {
     }
   }
 
-  private async ensureTitleDoesNotExists(title: string, taskRepository: TaskRepository): Promise<void> {
-    const taskExists = await taskRepository.match({ title })
+  private async ensureTitleDoesNotExists(title: string, folderId: string, taskRepository: TaskRepository): Promise<void> {
+    const taskExists = await taskRepository.match({ title, folder: {
+      id: folderId
+    } })
     if (taskExists) {
-      throw new TaskEmailAlreadyExistsException(`Task whit title ${title} already exists`)
+      throw new TaskTitleAlreadyExistsException(`Task whit title=${title} already exists`)
     }
   }
 }

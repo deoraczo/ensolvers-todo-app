@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Not } from "typeorm";
-import { TaskEmailAlreadyExistsException } from "../../exceptions/task-email-already-exists.exception";
+import { TaskTitleAlreadyExistsException } from "../../exceptions/task-title-already-exists.exception";
 import { Task } from "../../task.entity";
 import { TaskRepository } from "../../task.respository";
 import { TaskFinderService } from "../find/task-finder.service";
@@ -24,7 +24,7 @@ export class TaskRenamerService {
   private async ensureTitleDoesNotExists(id: string, title: string, taskRepository: TaskRepository): Promise<void> {
     const taskExists = await taskRepository.match({ title, id: Not(id) })
     if (taskExists) {
-      throw new TaskEmailAlreadyExistsException(`Task whit title=${title} already exists`)
+      throw new TaskTitleAlreadyExistsException(`Task whit title=${title} already exists`)
     }
   }
 }

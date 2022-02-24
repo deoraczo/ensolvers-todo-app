@@ -1,7 +1,11 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, IsUUID } from "class-validator";
 
 export class CreateTaskDTO {
   @IsNotEmpty()
   @IsString()
   title: string
+
+  @IsNotEmpty()
+  @IsUUID() 
+  folderId: string
 }

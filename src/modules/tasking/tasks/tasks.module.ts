@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { FoldersModule } from '../folders/folders.module';
 import { DeletTaskController } from './controllers/delete-task.controller';
 import { GetAllTasksController } from './controllers/get-all-tasks.controller';
 import { GetTaskController } from './controllers/get-task.controller';
@@ -44,6 +45,7 @@ import { IsTitleAlreadyExistConstraint } from './validators/is-title-already-exi
   ],
   imports: [
     TypeOrmModule.forFeature([Task], 'connection'),
+    FoldersModule
   ],
   exports: [TypeOrmModule]
 })

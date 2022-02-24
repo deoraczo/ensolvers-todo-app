@@ -1,5 +1,6 @@
 
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Unique } from "typeorm"
+import { Folder } from "../folders/folder.entity"
 import { TaskMarkException } from "./exceptions/task-mark.exception"
 import { TaskId } from "./task-id"
 
@@ -9,6 +10,7 @@ export enum TaskStatus {
 }
 
 @Entity({ name: 'tasks' })
+@Unique('title_folder_id_uk', ['title', 'folder'])
 export class Task {
   @PrimaryColumn({ 
     type: 'uuid',
@@ -16,7 +18,7 @@ export class Task {
   })
   readonly id: string
 
-  @Column({ unique: true })
+  @Column()
   readonly title: string
 
   @Column({
@@ -26,6 +28,12 @@ export class Task {
   })
   readonly status: TaskStatus
 
+  @ManyToOne(() => Folder, (folder) => folder.tasks, { onDelete: 'CASCADE' })
+  @JoinColumn({
+    name: 'folder_id'
+  })
+  readonly folder: Folder
+
   @Column({
     name: 'created_at',
     type: 'timestamp',
@@ -33,17 +41,18 @@ export class Task {
   })
   readonly createdAt: Date
 
-  constructor(id: string, title: string, status?: TaskStatus, createdAt?: Date) {
+  constructor(id: string, title: string, status?: TaskStatus, createdAt?: Date, folder?: Folder) {
     this.id = id
     this.title = title
     this.status = status ?? TaskStatus.PENDING
     this.createdAt = createdAt ?? new Date()
+    this.folder = folder
   }
 
 
-  static create(id: string, title: string): Task
+  static create(id: string, title: string, folder: Folder): Task
   {
-    const task = new Task(id, title)
+    const task = new Task(id, title, TaskStatus.PENDING, new Date(), folder)
     return task
   }
 
@@ -67,4 +76,5 @@ export class Task {
     const task = new Task(this.id, this.title, TaskStatus.PENDING, this.createdAt)
     return task
   }
+
 }
