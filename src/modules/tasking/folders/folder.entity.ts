@@ -35,4 +35,8 @@ export class Folder {
     const folder = new Folder(id, title)
     return folder
   }
+
+  renameTitle(title: string): Folder {
+    return new Folder(this.id, title, this.createdAt)
+  }
 } 
