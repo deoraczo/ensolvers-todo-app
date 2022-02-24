@@ -1,5 +1,6 @@
 
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Folder } from "../folders/folder.entity"
 import { TaskMarkException } from "./exceptions/task-mark.exception"
 import { TaskId } from "./task-id"
 
@@ -25,6 +26,12 @@ export class Task {
     default: TaskStatus.PENDING
   })
   readonly status: TaskStatus
+
+  @ManyToOne(() => Folder, (folder) => folder.tasks)
+  @JoinColumn({
+    name: 'folder_id'
+  })
+  readonly folder: Folder
 
   @Column({
     name: 'created_at',
