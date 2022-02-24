@@ -5,11 +5,11 @@ import store from './store'
 import './styles.scss'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faAdd, faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
+import { faAdd, faTrash, faPencil, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
-library.add(faAdd, faTrash, faPencil)
+library.add(faAdd, faTrash, faPencil, faXmark)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

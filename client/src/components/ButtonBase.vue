@@ -1,6 +1,6 @@
 <template>
   <button class="button" :style="backgroundColorStyle" @click="$emit('click')">
-    <font-awesome-icon :icon="icon" />
+    <font-awesome-icon v-if="icon" :icon="icon" />
     <span v-if="text">{{ text }}</span>
   </button>
 </template>
