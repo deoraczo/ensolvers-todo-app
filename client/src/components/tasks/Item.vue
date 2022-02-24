@@ -6,8 +6,8 @@
       <span class="info-date">5:23 AM, 01/16/17</span>
     </div>
     <div class="actions">
-      <button-base @click="deleteTask" icon="fa-solid fa-trash" color="rgb(61 61 62)" />
-      <button-base @click="openModal" icon="fa-solid fa-pencil" color="rgb(61 61 62)" />
+      <button-base @click="deleteTask" icon="fas fa-trash" color="rgb(61 61 62)" />
+      <button-base @click="openModal" icon="fas fa-edit" color="rgb(61 61 62)" />
     </div>
   </div>
 </template>
