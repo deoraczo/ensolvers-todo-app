@@ -50,7 +50,10 @@ import { mapActions, mapGetters } from 'vuex'
 import { taskService } from '@/services'
 import Alert from '@/components/Alert.vue'
 
-const initTaskDTO = { title: '' };
+const initTaskDTO = { 
+  title: '',
+  folderId: null,
+};
 
 export default {
   components: {
@@ -66,7 +69,8 @@ export default {
     return {
       showModal: false,
       taskDTO: {
-        title: ''
+        title: '',
+        folderId: null,
       },
       errorHelper: '',
       requestError: '',
@@ -106,12 +110,14 @@ export default {
     },
 
     openModal() {
+      this.resetFormCreator()
       this.showModal = true
     },
 
     resetFormCreator() {
       this.taskDTO = Object.assign({}, initTaskDTO)
       this.errorHelper = ''
+      this.requestError = ''
     },
 
     validateForm() {
@@ -130,6 +136,7 @@ export default {
       }
 
       const uuid = uuidGenerator()
+      this.taskDTO.folderId = this.folderId
       taskService.createTask(uuid, this.taskDTO)
         .then(({ data: { message } }) => {
           this.closeModal()

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FolderFinderService } from 'src/modules/tasking/folders/services/find/folder-finder.service';
-import { TaskEmailAlreadyExistsException } from '../../exceptions/task-email-already-exists.exception';
 import { TaskIdAlreadyExistsException } from '../../exceptions/task-id-already-exists.exception';
+import { TaskTitleAlreadyExistsException } from '../../exceptions/task-title-already-exists.exception';
 import { Task } from '../../task.entity';
 import { TaskRepository } from '../../task.respository';
 import { CreateTaskDTO } from './create-task.dto';
@@ -32,7 +32,7 @@ export class TaskCreatorService {
   private async ensureTitleDoesNotExists(title: string, taskRepository: TaskRepository): Promise<void> {
     const taskExists = await taskRepository.match({ title })
     if (taskExists) {
-      throw new TaskEmailAlreadyExistsException(`Task whit title ${title} already exists`)
+      throw new TaskTitleAlreadyExistsException(`Task whit title=${title} already exists`)
     }
   }
 }

@@ -28,6 +28,7 @@ import Modal from '@/components/modal/Index.vue'
 import Alert from '@/components/Alert.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 import { toastMixin } from '@/mixins/toast.mixin.js'
+import { folderService } from '@/services'
 
 const initFolderDTO = { title: '' };
 
@@ -79,7 +80,29 @@ export default {
     },
     
     updateFolder() {
-      
+       if (!this.validateForm()) {
+        return
+      }
+      folderService.renameFolder(this.folderId, this.folderDTO)
+        .then(({ data: { message } })=> {
+          this.closeModal()
+          
+          this.toast({
+            message,
+            type: 'success'
+          })
+          this.$store.dispatch('folder/folderUpdated', {
+            id: this.folderId,
+            title: this.folderDTO.title
+          })
+          this.resetFormUpdater()
+        })
+        .catch(err => {
+          const { statusCode, message } = err.response.data
+          if (statusCode === 409) {
+            this.requestError = message
+          }
+        })
     },
 
     openModal(folder) {
