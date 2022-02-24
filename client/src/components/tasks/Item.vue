@@ -3,11 +3,11 @@
     <check-box :checked="checked" @change="change" />
     <div class="info">
       <span class="info-title">{{ task.title }}</span>
-      <span class="info-date">5:23 AM, 01/16/17</span>
+      <span class="info-date">{{ formatedDate }}</span>
     </div>
     <div class="actions">
-      <button-base @click="deleteTask" icon="restore_from_trash" color="rgb(61 61 62)" />
       <button-base @click="openModal" icon="edit" color="rgb(61 61 62)" />
+      <button-base @click="deleteTask" icon="restore_from_trash" color="#dd3557" />
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ import CheckBox from '@/components/CheckBox.vue'
 import ButtonBase from '@/components/ButtonBase.vue'
 import { toastMixin } from '@/mixins/toast.mixin.js'
 import { taskService } from '@/services'
+import moment from 'moment'
 
 export default {
   props: {
@@ -91,6 +92,9 @@ export default {
   computed: {
     checked() {
       return this.task.status === 'DONE'
+    },
+    formatedDate() {
+      return moment(this.task.createdAt).format('LL h:mma')
     }
   },
 }
