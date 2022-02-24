@@ -58,16 +58,35 @@ export default {
       },
       errorHelper: '',
       requestError: '',
+      folderId: null,
     }
   },
 
-  mounted() {
-    this.fetchTasks()
+  created() {
+    const { id } = this.$route.params
+    this.folderId = id
+  },
+
+  async mounted() {
+    try {
+      await this.fetchTasksByFolderId(this.folderId)
+    } catch (error) {
+      const { statusCode, message } = error.response.data
+      if (statusCode === 404) {
+          this.toast({
+            message,
+            type: 'error'
+          })
+
+          this.$router.push({ name: 'folders'})
+      }
+    }
   },
 
   methods: {
     ...mapActions({
-      fetchTasks: 'task/fetchTasks'
+      fetchTasks: 'task/fetchTasks',
+      fetchTasksByFolderId: 'task/fetchTasksByFolderId'
     }),
 
     closeModal() {

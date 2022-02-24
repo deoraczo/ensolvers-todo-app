@@ -1,4 +1,4 @@
-import { taskService } from '@/services'
+import { taskService, folderService } from '@/services'
 
 const taskStore = {
   namespaced: true,
@@ -30,7 +30,15 @@ const taskStore = {
     },
     async taskUpdated({ commit }, task) {
       commit('TASK_UPDATED', task)
-    }
+    },
+    async fetchTasksByFolderId({ commit }, folderId) {
+      // const { data } = await taskService.getAllTasks()
+      // commit('FILL_TASKS', data)
+      return folderService.getFolderWithTasks(folderId)
+        .then(({ data }) => {
+          commit('FILL_TASKS', data.tasks)
+        })
+    },
   },
   getters: {
     getTasks: state => {

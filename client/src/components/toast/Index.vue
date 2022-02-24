@@ -68,7 +68,6 @@ export default {
       }
 
       this.timeout = setTimeout(() => {
-        console.log('termino')
         this.show = false
       }, 3000)
     }
@@ -76,7 +75,6 @@ export default {
 
   computed: {
     toastIcon() {
-      console.log(this.type)
       return `${this.type}-icon`
     },
     toastClass() {

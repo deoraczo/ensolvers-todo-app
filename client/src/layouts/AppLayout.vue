@@ -4,19 +4,8 @@
     <main class="main">
       <slot></slot>
     </main>
-    <toast />
   </div>
 </template>
-
-<script>
-import Toast from '@/components/toast/Index.vue'
-
-export default {
-  components: {
-    Toast
-  }
-}
-</script>
 
 <style lang="scss" scoped>
 .main {

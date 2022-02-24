@@ -43,9 +43,6 @@ export default {
           })
           this.$store.dispatch('task/taskRemoved', this.task.id)
         })
-        .catch(err => {
-          console.log(err)
-        })
     },
 
     change(checked) {
@@ -93,16 +90,9 @@ export default {
 
   computed: {
     checked() {
-      console.log('pass')
       return this.task.status === 'DONE'
     }
   },
-
-  watch: {
-    checked(oldVal, newVal) {
-      console.log(oldVal, newVal)
-    },
-  }
 }
 </script>
 

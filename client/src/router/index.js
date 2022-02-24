@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Task from '../views/tasks/Index.vue'
+import Folder from '../views/folders/Index.vue'
 
 Vue.use(VueRouter)
 
@@ -21,10 +22,15 @@ const routes = [
   // },
   {
     path: '/',
-    redirect: '/tasks'
+    redirect: '/folders'
   },
   {
-    path: '/tasks',
+    path: '/folders',
+    name: 'folders',
+    component: Folder
+  },
+  {
+    path: '/folders/:id/tasks',
     name: 'tasks',
     component: Task
   },
