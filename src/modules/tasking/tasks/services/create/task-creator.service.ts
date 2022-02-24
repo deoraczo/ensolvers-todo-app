@@ -17,7 +17,7 @@ export class TaskCreatorService {
   async create(taskId: string, dto: CreateTaskDTO): Promise<void> {
     const folder = await this.folderFinder.find(dto.folderId)
     await this.ensureIdUuidDoesNotExists(taskId, this.taskRepository)
-    await this.ensureTitleDoesNotExists(dto.title, this.taskRepository)
+    await this.ensureTitleDoesNotExists(dto.title, dto.folderId, this.taskRepository)
     const task = Task.create(taskId, dto.title, folder)
     await this.taskRepository.save(task)
   }
@@ -29,8 +29,10 @@ export class TaskCreatorService {
     }
   }
 
-  private async ensureTitleDoesNotExists(title: string, taskRepository: TaskRepository): Promise<void> {
-    const taskExists = await taskRepository.match({ title })
+  private async ensureTitleDoesNotExists(title: string, folderId: string, taskRepository: TaskRepository): Promise<void> {
+    const taskExists = await taskRepository.match({ title, folder: {
+      id: folderId
+    } })
     if (taskExists) {
       throw new TaskTitleAlreadyExistsException(`Task whit title=${title} already exists`)
     }

@@ -1,5 +1,5 @@
 
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Unique } from "typeorm"
 import { Folder } from "../folders/folder.entity"
 import { TaskMarkException } from "./exceptions/task-mark.exception"
 import { TaskId } from "./task-id"
@@ -10,6 +10,7 @@ export enum TaskStatus {
 }
 
 @Entity({ name: 'tasks' })
+@Unique('title_folder_id_uk', ['title', 'folder'])
 export class Task {
   @PrimaryColumn({ 
     type: 'uuid',
@@ -17,7 +18,7 @@ export class Task {
   })
   readonly id: string
 
-  @Column({ unique: true })
+  @Column()
   readonly title: string
 
   @Column({

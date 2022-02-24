@@ -13,7 +13,6 @@ export class TaskMarkerService {
   async mark(taskId: string): Promise<void> {
     const task = await this.taskFinder.find(taskId)
     const markedTask = task.mark()
-    console.log(markedTask)
     await this.taskRepository.save(markedTask)
   }
 }
