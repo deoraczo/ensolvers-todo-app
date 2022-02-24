@@ -21,4 +21,18 @@ export class Folder {
     nullable: false
   })
   readonly createdAt: Date
+
+
+  constructor(id: string, title: string, createdAt?: Date) {
+    this.id = id
+    this.title = title
+    this.createdAt = createdAt ?? new Date()
+  }
+
+
+  static create(id: string, title: string): Folder
+  {
+    const folder = new Folder(id, title)
+    return folder
+  }
 } 
