@@ -20,10 +20,15 @@ const routes = [
   //     import(/* webpackChunkName: "about" */ '../views/About.vue'),
   // },
   {
+    path: '/',
+    redirect: '/tasks'
+  },
+  {
     path: '/tasks',
     name: 'tasks',
     component: Task
-  }
+  },
+  // { path: '*', component: Task }
 ]
 
 const router = new VueRouter({
