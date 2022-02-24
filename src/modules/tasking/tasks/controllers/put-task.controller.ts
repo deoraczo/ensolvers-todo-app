@@ -9,6 +9,7 @@ export class PutTaskController {
   @Put(':taskId')
   @HttpCode(HttpStatus.CREATED)
   async invoke(@Body() dto: CreateTaskDTO, @Param('taskId') taskId: string) {
+    console.log(dto);
     await this.taskCreator.create(taskId, dto)
     return {
       message: 'Task created successfully',

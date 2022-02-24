@@ -40,17 +40,18 @@ export class Task {
   })
   readonly createdAt: Date
 
-  constructor(id: string, title: string, status?: TaskStatus, createdAt?: Date) {
+  constructor(id: string, title: string, status?: TaskStatus, createdAt?: Date, folder?: Folder) {
     this.id = id
     this.title = title
     this.status = status ?? TaskStatus.PENDING
     this.createdAt = createdAt ?? new Date()
+    this.folder = folder
   }
 
 
-  static create(id: string, title: string): Task
+  static create(id: string, title: string, folder: Folder): Task
   {
-    const task = new Task(id, title)
+    const task = new Task(id, title, TaskStatus.PENDING, new Date(), folder)
     return task
   }
 
@@ -74,4 +75,5 @@ export class Task {
     const task = new Task(this.id, this.title, TaskStatus.PENDING, this.createdAt)
     return task
   }
+
 }
