@@ -26,7 +26,7 @@ export class TypeOrmFolderRespository extends TypeOrmRepository<Folder> implemen
     await this.delete(id)
   }
 
-  async match(where: object = {}): Promise<Folder> {
-    return await this.findByMatch(where)
+  async match(where: object = {}, relations: string[] = []): Promise<Folder> {
+    return await this.findByMatch(where, relations)
   }
 }

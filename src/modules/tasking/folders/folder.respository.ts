@@ -7,7 +7,7 @@ export interface FolderRepository {
   find(folderId: string): Promise<Nullable<Folder>>
   findAll(): Promise<Folder[]>
   remove(id: string): Promise<void>
-  match(where: Object): Promise<Nullable<Folder>>
+  match(where: Object, relations: string[]): Promise<Nullable<Folder>>
 }
 
 export const FolderRepository = Symbol('FolderRepository')
