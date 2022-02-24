@@ -3,7 +3,7 @@
     <div class="container">
       <h1 class="title">TODO APP</h1>
       <div class="" style="margin-bottom: 20px;">
-        <button-base @click="openModal" text="Add task" icon="fas fa-plus"/>
+        <button-base @click="openModal" text="Add task" icon="add"/>
       </div>
       <task v-if="tasks" :tasks="tasks"/>
     </div>

@@ -9,7 +9,7 @@
                 <slot name="header"> </slot>
               </div>
               <button class="close-btn" @click="$emit('close')">
-                <font-awesome-icon icon="fa-solid fa-xmark" size="xl" />
+                <i class="material-icons">close</i>
               </button>
             </div>
 
