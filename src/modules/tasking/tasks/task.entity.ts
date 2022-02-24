@@ -27,7 +27,7 @@ export class Task {
   })
   readonly status: TaskStatus
 
-  @ManyToOne(() => Folder, (folder) => folder.tasks)
+  @ManyToOne(() => Folder, (folder) => folder.tasks, { onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'folder_id'
   })

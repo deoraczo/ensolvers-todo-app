@@ -22,6 +22,13 @@ export class Folder {
   })
   readonly createdAt: Date
 
+  @Column({
+    name: 'updated_at',
+    type: 'timestamp',
+    nullable: true
+  })
+  readonly updatedAt: Date
+
 
   constructor(id: string, title: string, createdAt?: Date) {
     this.id = id
