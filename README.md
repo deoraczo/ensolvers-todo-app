@@ -1,73 +1,113 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
+## Requirements
+- Node 14.17.5
+- npm 6.14.14
+- NestJs 8.1.1
+- VueJs 2.6.11
+- Mysql Server 8.0
+- docker
+- docker-compose
+  
+## Installation and Usage (Linux Ubuntu - Development)
+Create Mysql Database in local
 ```bash
-$ npm install
+mysql -u root -p
+```
+and
+```bash
+CREATE DATABASE <name_db>; # remember the name we will use it later
 ```
 
-## Running the app
+Create Mysql Database using docker:
+_Note_: change MYSQL_DATABASE, MYSQL_PASSWORD, MYSQL_USER and MYSQL_ROOT_PASSWORD.
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker run --name tododb -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=tasking_db -e MYSQL_USER=root -e MYSQL_PASSWORD=password --restart always -p 3306:3306 -d mysql/mysql-server:8.0
 ```
 
-## Test
+Clone this repo
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/deoraczo/ensolvers-todo-app.git
+# Enter your ensolvers-todo-app folder
+cd ensolvers-todo-app
+```
+create .env file:
+```bash
+cp .env.example .env
+nano .env
 ```
 
-## Support
+Fill `.env` file with environment variables:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+PORT=
 
-## Stay in touch
+DB_HOST=   #DB host IP, usually localhost
+DB_PORT=
+DB_NAME=   #created database name
+DB_USER=
+DB_PASSWORD=
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Install backend dependencies:
+```bash
+npm install
+```
+Start backend in development mode:
+```bash
+npm run start:dev
+```
+Open a second terminal, go to client folder:
+create .env file:
+```bash
+cd client
+```
+Install client dependencies:
+```bash
+npm install
+```
+Start client in development mode:
+```bash
+npm run serve
+```
 
-## License
+Go to http://your_server_ip:8080/tasks
 
-Nest is [MIT licensed](LICENSE).
+## Installation and Usage (Linux Ubuntu - Production)
+Clone this repo
+
+```bash
+git clone https://github.com/deoraczo/ensolvers-todo-app.git
+# Enter your ensolvers-todo-app folder
+cd ensolvers-todo-app
+```
+create .env file:
+```bash
+cp .env.example .env
+nano .env
+```
+
+Fill `.env` file with environment variables:
+
+```bash
+PORT=
+
+DB_HOST=   #DB host IP, usually localhost
+DB_PORT=
+DB_NAME=   #created database name
+DB_USER=
+DB_PASSWORD=
+```
+### Deploy docker
+**_Note_**: .env file configured by which uses the variables to configure the containers is required
+```bash
+sh scripts/docker.prod.sh
+```
+Go to http://your_server_ip:3000/tasks
+
+### Deploy local
+**_Note_**: An already created database is required
+```bash
+sh scripts/up-app.prod.sh
+```
+Go to http://your_server_ip:3000/tasks
