@@ -9,6 +9,9 @@ const folderStore = {
     FILL_TASKS(state, folders) {
       state.folders = folders
     },
+    FOLDER_CREATED(state, folder) {
+      state.folders = [...state.folders, folder]
+    },
   },
   actions: {
     async fetchFolders({commit}) {
@@ -17,6 +20,9 @@ const folderStore = {
     },
     async folderRemoved({ commit, state }, id) {
       commit('FILL_TASKS', state.folders.filter(folder => folder.id !== id))
+    },
+    async folderCreated({ commit }, folder) {
+      commit('FOLDER_CREATED', folder)
     },
   },
   getters: {

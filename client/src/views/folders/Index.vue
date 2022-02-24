@@ -21,7 +21,7 @@
       </div>
       <div slot="footer" class="footer-actions">
         <button-base @click="closeModal" text="Cerrar" color="#3a4246"/>
-        <button-base @click="createTask" text="Create" color="#00ab47"/>
+        <button-base @click="createFolder" text="Create" color="#00ab47"/>
       </div>
     </modal>
   </app-layout>
@@ -33,12 +33,12 @@ import ButtonBase from '@/components/ButtonBase.vue'
 import Modal from '@/components/modal/Index.vue'
 import Folder from '@/components/folders/Index.vue'
 import { toastMixin } from '@/mixins/toast.mixin.js'
-// import { uuidGenerator } from '@/utils/uuid-generator.js'
+import { uuidGenerator } from '@/utils/uuid-generator.js'
 import { mapActions, mapGetters } from 'vuex'
-// import { folderService } from '@/services'
+import { folderService } from '@/services'
 import Alert from '@/components/Alert.vue'
 
-// const initTaskDTO = { title: '' };
+const initFolderDTO = { title: '' };
 
 export default {
   components: {
@@ -72,7 +72,56 @@ export default {
 
 
     openModal() {
+      this.resetFormCreator()
       this.showModal = true
+    },
+
+    closeModal() {
+      this.showModal = false
+    },
+
+    resetFormCreator() {
+      this.folderDTO = Object.assign({}, initFolderDTO)
+      this.errorHelper = ''
+      this.requestError = ''
+    },
+
+    validateForm() {
+      if (this.folderDTO.title && this.folderDTO.title.trim().length > 0) {
+        return true
+      }
+
+      this.errorHelper = 'Name is required'
+
+      return false
+    },
+
+    createFolder() {
+      if (!this.validateForm()) {
+        return
+      }
+
+      const uuid = uuidGenerator()
+      folderService.createFolder(uuid, this.folderDTO)
+        .then(({ data: { message } }) => {
+          this.closeModal()
+          this.toast({
+            message,
+            type: 'success'
+          })
+          this.$store.dispatch('folder/folderCreated', {
+            id: uuid,
+            title: this.folderDTO.title,
+            createdAt: new Date(),
+          })
+          this.resetFormCreator()
+        })
+        .catch(err => {
+          const { statusCode, message } = err.response.data
+          if (statusCode === 409) {
+            this.requestError = message
+          }
+        })
     },
   },
   computed: {

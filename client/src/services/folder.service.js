@@ -13,17 +13,9 @@ class FolderService {
     return await apiInvoker.http.delete(`/folders/${id}`)
   }
 
-  // async markFolder(id) {
-  //   return await apiInvoker.http.patch(`/folders/${id}/mark`)
-  // }
-
-  // async unmarkFolder(id) {
-  //   return await apiInvoker.http.patch(`/folders/${id}/unmark`)
-  // }
-
-  // async createFolder(id, folderDTO) {
-  //   return await apiInvoker.http.put(`/folders/${id}`, folderDTO)
-  // }
+  async createFolder(id, folderDTO) {
+    return await apiInvoker.http.put(`/folders/${id}`, folderDTO)
+  }
 
   // async renameFolder(id, folderDTO) {
   //   return await apiInvoker.http.patch(`/folders/${id}`, folderDTO)
