@@ -7,7 +7,7 @@
     <div class="actions">
       <button-base @click="showTasks" icon="remove_red_eye" color="rgb(61 61 62)" />
       <button-base @click="openModal" icon="edit" color="rgb(61 61 62)" />
-      <button-base @click="deleteFolder" icon="restore_from_trash" color="rgb(61 61 62)" />
+      <button-base @click="deleteFolder" icon="restore_from_trash" color="#dd3557" />
     </div>
   </div>
 </template>

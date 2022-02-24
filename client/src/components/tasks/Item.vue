@@ -6,8 +6,8 @@
       <span class="info-date">5:23 AM, 01/16/17</span>
     </div>
     <div class="actions">
-      <button-base @click="deleteTask" icon="restore_from_trash" color="rgb(61 61 62)" />
       <button-base @click="openModal" icon="edit" color="rgb(61 61 62)" />
+      <button-base @click="deleteTask" icon="restore_from_trash" color="#dd3557" />
     </div>
   </div>
 </template>
