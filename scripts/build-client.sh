@@ -2,6 +2,6 @@
 
 cd ./client
 
-npm install
+rm -f package-lock.json && npm install
 
 npm run build
