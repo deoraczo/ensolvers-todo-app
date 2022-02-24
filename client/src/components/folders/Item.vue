@@ -2,7 +2,7 @@
   <div class="items">
     <div class="info">
       <span class="info-title">{{ folder.title }}</span>
-      <span class="info-date">5:23 AM, 01/16/17</span>
+      <span class="info-date">{{ formatedDate }}</span>
     </div>
     <div class="actions">
       <button-base @click="showTasks" icon="remove_red_eye" color="rgb(61 61 62)" />
@@ -16,6 +16,7 @@
 import ButtonBase from '@/components/ButtonBase.vue'
 import { toastMixin } from '@/mixins/toast.mixin.js'
 import { folderService } from '@/services'
+import moment from 'moment'
 
 export default {
   props: {
@@ -49,8 +50,15 @@ export default {
 
     showTasks() {
       this.$router.push({name: 'tasks', params: { id: this.folder.id }})
-    }
+    },
+
   },
+
+  computed: {
+    formatedDate() {
+      return moment(this.folder.createdAt).format('LL h:mma')
+    }
+  }
 
 }
 </script>
